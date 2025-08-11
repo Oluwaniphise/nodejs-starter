@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
@@ -134,9 +133,6 @@ const deletePlace = async (req, res, next) => {
 
   res.status(200).json({ message: "Place deleted" });
 };
-
-
-
 
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
