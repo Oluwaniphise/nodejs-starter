@@ -123,7 +123,6 @@ const deletePlace = async (req, res, next) => {
     place.creator.places.pull(place);
     await place.creator.save({ session: session });
   } catch (err) {
-    console.log(err);
     const error = new HttpError(
       "Something went wrong, could not delete place",
       500
