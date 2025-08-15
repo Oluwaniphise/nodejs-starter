@@ -32,12 +32,6 @@ const signUp = async (req, res, next) => {
 
   const { name, email, password } = req.body;
 
-  const hasUser = DUMMY_USERS.find((u) => u.email === email);
-
-  if (hasUser) {
-    throw new HttpError("Could not create user, email already exists", 422);
-  }
-
   let existingUser;
 
   try {
@@ -62,8 +56,7 @@ const signUp = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image:
-      "https://www.istockphoto.com/photo/empty-concrete-floor-in-front-of-modern-buildings-in-the-downtown-street-gm2169826353-589791796?utm_source=pixabay&utm_medium=affiliate&utm_campaign=sponsored_image&utm_content=srp_topbannerNone_media&utm_term=street",
+    image: req.file.path,
     password,
     places: [],
   });

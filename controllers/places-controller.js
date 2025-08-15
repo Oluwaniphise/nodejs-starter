@@ -149,8 +149,7 @@ const createPlace = async (req, res, next) => {
     address,
     creator,
     location: getCoordsForAddress(),
-    image:
-      "https://www.istockphoto.com/photo/empty-concrete-floor-in-front-of-modern-buildings-in-the-downtown-street-gm2169826353-589791796?utm_source=pixabay&utm_medium=affiliate&utm_campaign=sponsored_image&utm_content=srp_topbannerNone_media&utm_term=street",
+    image: req.file.path,
   });
 
   let user;

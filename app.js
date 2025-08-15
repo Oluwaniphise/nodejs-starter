@@ -1,13 +1,27 @@
 const express = require("express");
 const bordyParser = require("body-parser");
 const mongoose = require("mongoose");
+const fs = require("fs");
+const path = require("path");
 
 const uri =
-  "mongodb+srv://enoch:r1xLzMnNG1eMnmzW@cluster0.h6hfh2e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://enoch:r1xLzMnNG1eMnmzW@cluster0.h6hfh2e.mongodb.net/mern?retryWrites=true&w=majority&appName=Cluster0";
 
 const app = express();
 
 app.use(bordyParser.json());
+
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  next();
+});
 
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
@@ -22,6 +36,11 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
   if (res.headerSent) {
     return next(error);
   }
