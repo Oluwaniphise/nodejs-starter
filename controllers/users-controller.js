@@ -149,14 +149,7 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({
-    message: "Logged in",
-    user: existingUser.toObject({
-      userId: existingUser.id,
-      email: existingUser.email,
-      token: token,
-    }),
-  });
+  res.json({ user: existingUser.id, email: existingUser.email, token: token });
 };
 
 exports.getUsers = getUsers;
